@@ -26,4 +26,10 @@ public class LargeAreaBean {
 		this.schoolcode = schoolcode;
 	}
 
+	@Override
+	public String toString() {
+		return "LargeAreaBean [name=" + name + ", schoolcode=" + schoolcode + "]";
+	}
+	
+
 }

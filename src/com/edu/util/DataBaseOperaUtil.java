@@ -804,7 +804,8 @@ public class DataBaseOperaUtil {
 		HashMap<Integer, LargeAreaSumBean> largeMap = new HashMap<Integer, LargeAreaSumBean>();
 		String sql = " select * from (select tmp.id,tmp.largeAreaName,tmp.schID,tmp.schoolName,zh.majorId "
 				+ " from (SELECT l.id,l.largeAreaName,s.id schID,s.schoolName from tab_large l,tab_school s WHERE  s.largeAreaId = l.id ) tmp LEFT JOIN tab_sch_and_major zh on tmp.schID = zh.schoolId  order by tmp.id) temp where temp.id = '"
-				+ areaId + "'";
+				+ areaId + "'" + "OR temp.id=9";
+		//System.out.println(sql);
 		DruidPooledConnection conn = DbPoolConnection.getInstance().getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;

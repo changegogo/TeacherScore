@@ -94,13 +94,18 @@ public class RecentInputServlet2 extends HttpServlet {
 
 		List<String> subjects = DataBaseOperaUtil.getSubjects();
 		if (areaId == 8) {
-			largeMap = DataBaseOperaUtil.getSchools();
+			largeMap = DataBaseOperaUtil.getSchools(); // admin用户，查出所有的大区校区数据
 		} else {
-			largeMap = DataBaseOperaUtil.getAreaAndSchoolAndMajor(areaId);
+			largeMap = DataBaseOperaUtil.getAreaAndSchoolAndMajor(areaId); // 大区账户，查出对应大区的数据
 		}
 		List<List<SchoolBean>> sumList = new ArrayList<List<SchoolBean>>();
 		List<LargeAreaBean> areaList = new ArrayList<LargeAreaBean>();
 		Iterator iter = largeMap.entrySet().iterator(); // 获得map的Iterator
+		/**
+		 * 为了使单独大区账户，添加启动区信息
+		 * index==2时，设置ScoolCode=1
+		 * */
+		int index = 0; 
 		while (iter.hasNext()) {
 			Entry entry = (Entry) iter.next();
 			LargeAreaSumBean bean = (LargeAreaSumBean) entry.getValue();
@@ -108,8 +113,14 @@ public class RecentInputServlet2 extends HttpServlet {
 
 			LargeAreaBean labean = new LargeAreaBean();
 			labean.setName(bean.getName());
-			labean.setSchoolcode(bean.getSchoolcode());
+			if (areaId == 8) { // 表示最高权限账户
+				labean.setSchoolcode(bean.getSchoolcode());
+			}else{
+				labean.setSchoolcode(index);
+			}
+			
 			areaList.add(labean);
+			++index;
 		}
 
 		recent.setClassList(recentClass);

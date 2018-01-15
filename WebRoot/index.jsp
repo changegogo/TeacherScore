@@ -194,6 +194,6 @@
 	</script>
 	<script src="js/zepto.min.js"></script>
 	<script src="js/touch.js"></script>
-	<script src="js/index.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="js/index.js?version=2.0" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
