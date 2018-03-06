@@ -1,0 +1,3 @@
+eclipse.preferences.version=1
+validator.Checked=WebRoot/select,WebRoot/index.jsp,WebRoot/json/headmaster.json,WebRoot/json/jsondata/schools.json,WebRoot/json/employmentManager.json
+validator.Unchecked=
