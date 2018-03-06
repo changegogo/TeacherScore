@@ -14,11 +14,13 @@
 <link href="css/font-awesome.css" rel="stylesheet" />
 </head>
 <body>
-	<div id="wrapper" data-genuitec-lp-enabled="false"
-		data-genuitec-file-id="wc1-52"
-		data-genuitec-path="/SearchServer/WebRoot/select/abnormal.jsp"
-		data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-52"
-		data-genuitec-path="/SearchServer/WebRoot/select/abnormal.jsp">
+	<%
+		HttpSession s = request.getSession();
+		String username = (String) s.getAttribute("username");
+		String password = (String) s.getAttribute("password");
+		if (username != null && password != null && ("admin".equals(username) || "jxgl".equals(username))) {
+	%>
+	<div id="wrapper">
 		<nav class="navbar  navbar-cls-top " role="navigation"
 			style="margin-bottom: 0">
 		<div class="navbar-header">
@@ -46,6 +48,7 @@
 						class="fa fa-bar-chart-o"></i>数据分析</a></li>
 				<li><a class="active-menu" href="dataStatistics.jsp"><i
 						class="fa fa-key"></i>数据统计</a></li>
+				<li><a href="exportTable.jsp"><i class="glyphicon glyphicon-file"></i>导出表格</a></li>
 			</ul>
 		</div>
 
@@ -99,6 +102,12 @@
 	<script src="js/tableExport.min.js"></script>
 	<script src="js/bootstrap-table-export.min.js"></script>
 	<script src="js/src/abnormal.js"></script>
+	
+	<%
+		} else {
+			response.sendRedirect("../Login.html");
+		}
+	%>
 	
 	
 </body>
