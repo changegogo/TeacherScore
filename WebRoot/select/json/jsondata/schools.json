@@ -10,11 +10,30 @@
   	{"sch": "石家庄民族路","subcode": [0]}
   ],
   [
+  	{"sch": "合肥新都会","subcode": [2]},
+  	{"sch": "合肥长江路","subcode": [0]},
+  	{"sch": "南京玄武","subcode": [2]},
+  	{"sch": "南京雨花台","subcode": [0]},
+  	{"sch": "苏州姑苏","subcode": [0]},
+  	{"sch": "常州钟楼","subcode": [0]},
+  	{"sch": "无锡滨湖","subcode": [1]},
+  	{"sch": "杭州下城","subcode": [0]},
+  	{"sch": "杭州二分","subcode": [3]},
+  	{"sch": "宁波鄞州","subcode": [0,3]}
+  ],
+  [
   	{"sch": "上海虹口完美","subcode": [6]},
   	{"sch": "上海虹口卓新","subcode": [0]},
   	{"sch": "上海徐汇","subcode": [1]},
   	{"sch": "上海株洲路","subcode": [3]},
-  	{"sch": "上海浦东","subcode": [0]}
+  	{"sch": "上海浦东","subcode": [0]},
+  	{"sch": "重庆完美","subcode": [6]},
+  	{"sch": "重庆天陈","subcode": [3]},
+  	{"sch": "重庆渝中","subcode": [0,1,3]},
+  	{"sch": "成都桐梓林","subcode": [0,2]},
+  	{"sch": "成都天府新谷","subcode": [1,4]},
+  	{"sch": "成都牛王庙","subcode": [3]},
+  	{"sch": "贵阳南明","subcode": [0]}
   ],
   [
   	{"sch": "西安国贸","subcode": [0,6]},
@@ -25,6 +44,17 @@
   	{"sch": "太原长风街","subcode": [1]},
   	{"sch": "郑州国泰","subcode": [1]},
   	{"sch": "郑州金水","subcode": [0]}
+  ],
+  [
+  	{"sch": "深圳华强北","subcode": [0]},
+  	{"sch": "深圳罗湖","subcode": [6]},
+  	{"sch": "深圳福田","subcode": [1]},
+  	{"sch": "广州黄埔","subcode": [1]},
+  	{"sch": "广州元岗","subcode": [6]},
+  	{"sch": "广州长兴","subcode": [0]},
+  	{"sch": "柳州广场路","subcode": [0]},
+  	{"sch": "南宁西乡塘","subcode": [0]},
+  	{"sch": "福州台江","subcode": [0]}
   ],
   [
   	{"sch": "长沙书院","subcode": [0,6]},
@@ -42,37 +72,5 @@
   	{"sch": "沈阳沈河","subcode": [6]},
   	{"sch": "沈阳和平","subcode": [0]},
   	{"sch": "大连中山","subcode": [0]}
-  ],
-  [
-  	{"sch": "深圳华强北","subcode": [0]},
-  	{"sch": "深圳罗湖","subcode": [6]},
-  	{"sch": "深圳福田","subcode": [1]},
-  	{"sch": "广州黄埔","subcode": [1]},
-  	{"sch": "广州元岗","subcode": [6]},
-  	{"sch": "广州长兴","subcode": [0]},
-  	{"sch": "柳州广场路","subcode": [0]},
-  	{"sch": "南宁西乡塘","subcode": [0]},
-  	{"sch": "福州台江","subcode": [0]}
-  ],
-  [
-  	{"sch": "合肥新都会","subcode": [2]},
-  	{"sch": "合肥长江路","subcode": [0]},
-  	{"sch": "南京玄武","subcode": [2]},
-  	{"sch": "南京雨花台","subcode": [0]},
-  	{"sch": "苏州姑苏","subcode": [0]},
-  	{"sch": "常州钟楼","subcode": [0]},
-  	{"sch": "无锡滨湖","subcode": [1]},
-  	{"sch": "杭州下城","subcode": [0]},
-  	{"sch": "杭州二分","subcode": [3]},
-  	{"sch": "宁波鄞州","subcode": [0,3]}
-  ],
-  [
-  	{"sch": "重庆完美","subcode": [6]},
-  	{"sch": "重庆天陈","subcode": [3]},
-  	{"sch": "重庆渝中","subcode": [0,1,3]},
-  	{"sch": "成都桐梓林","subcode": [0,2]},
-  	{"sch": "成都天府新谷","subcode": [1,4]},
-  	{"sch": "成都牛王庙","subcode": [3]},
-  	{"sch": "贵阳南明","subcode": [0]}
   ]
 ]

@@ -725,7 +725,7 @@ public class DataBaseOperaUtil {
 	 * @throws SQLException
 	 */
 	public static List<LargeAreaBean> getAllLargeAreaBean() throws SQLException {
-		String sql = "SELECT id,largeAreaName FROM " + Global.TAB_AREALARGE;
+		String sql = "SELECT id,largeAreaName FROM " + Global.TAB_AREALARGE +" ORDER BY largeLeader ASC";
 		DruidPooledConnection conn = DbPoolConnection.getInstance().getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -749,6 +749,7 @@ public class DataBaseOperaUtil {
 		return areaLargeList;
 	}
 
+	//查询所有大区开设的所有校区，以及校区开设的专业
 	public static HashMap<Integer, LargeAreaSumBean> getSchools() throws SQLException {
 		HashMap<Integer, LargeAreaSumBean> largeMap = new HashMap<Integer, LargeAreaSumBean>();
 		// 查询出所有的校区所对应的专业
@@ -757,7 +758,8 @@ public class DataBaseOperaUtil {
 		// + " from tab_large l,tab_school s,tab_major m ,tab_sch_and_major zh "
 		// + " WHERE zh.majorId = m.id AND zh.schoolId = s.id AND s.largeAreaId
 		// = l.id " + " ORDER BY l.id";
-		String sql = "select tmp.id,tmp.largeAreaName,tmp.schID,tmp.schoolName,zh.majorId from (SELECT l.id,l.largeAreaName,s.id schID,s.schoolName from tab_large l,tab_school s WHERE  s.largeAreaId = l.id ) tmp LEFT JOIN tab_sch_and_major zh on tmp.schID = zh.schoolId order by tmp.id";
+		String sql = "select tmp.id,tmp.largeAreaName,tmp.largeLeader,tmp.schID,tmp.schoolName,zh.majorId from (SELECT l.id,l.largeAreaName,l.largeLeader,s.id schID,s.schoolName from tab_large l,tab_school s WHERE  s.largeAreaId = l.id ) tmp LEFT JOIN tab_sch_and_major zh on tmp.schID = zh.schoolId ORDER BY tmp.largeLeader ASC";
+		System.out.println("所有大区："+sql);
 		DruidPooledConnection conn = DbPoolConnection.getInstance().getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -802,10 +804,10 @@ public class DataBaseOperaUtil {
 	 */
 	public static HashMap<Integer, LargeAreaSumBean> getAreaAndSchoolAndMajor(int areaId) throws SQLException {
 		HashMap<Integer, LargeAreaSumBean> largeMap = new HashMap<Integer, LargeAreaSumBean>();
-		String sql = " select * from (select tmp.id,tmp.largeAreaName,tmp.schID,tmp.schoolName,zh.majorId "
-				+ " from (SELECT l.id,l.largeAreaName,s.id schID,s.schoolName from tab_large l,tab_school s WHERE  s.largeAreaId = l.id ) tmp LEFT JOIN tab_sch_and_major zh on tmp.schID = zh.schoolId  order by tmp.id) temp where temp.id = '"
-				+ areaId + "'" + "OR temp.id=9";
-		//System.out.println(sql);
+		String sql = " select * from (select tmp.id,tmp.largeAreaName,tmp.largeLeader,tmp.schID,tmp.schoolName,zh.majorId "
+				+ " from (SELECT l.id,l.largeAreaName,s.id schID,s.schoolName from tab_large l,tab_school s WHERE  s.largeAreaId = l.id  ORDER BY l.largeLeader ASC) tmp LEFT JOIN tab_sch_and_major zh on tmp.schID = zh.schoolId  order by tmp.id) temp where temp.id = '"
+				+ areaId + "'" + "OR temp.id=9 ORDER BY largeLeader ASC";
+		System.out.println("确定大区："+sql);
 		DruidPooledConnection conn = DbPoolConnection.getInstance().getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;
