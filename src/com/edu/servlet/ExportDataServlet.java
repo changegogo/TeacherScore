@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -47,7 +48,13 @@ public class ExportDataServlet extends HttpServlet {
 		SelectBean selectBean = JsonUtil.getJsonSelectJson(jsonString);
 		try {
 			List<Investigation> exportList = DataBaseOperaUtil.selectExportData(selectBean);
-			String[] titles = new String[] { "校区", "教师名称", "角色", "专业", "平均分", "老师签字" };
+			// 遍历添加起始日期
+			for (Investigation investigation : exportList) {
+				String startData = selectBean.getStartDate().replace("-", "/");
+				String endData = selectBean.getEndDate().replace("-", "/");
+				investigation.setStartEndData(startData+"-"+endData);
+			}
+			String[] titles = new String[] { "校区", "教师名称", "角色", "专业", "平均分","起始日期", "老师签字" };
 			expressTeacher(req, resp, titles, exportList, selectBean);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -116,7 +123,7 @@ public class ExportDataServlet extends HttpServlet {
 		cell_Style_red.setBorderTop(HSSFCellStyle.BORDER_THIN);// 上边框
 		cell_Style_red.setBorderRight(HSSFCellStyle.BORDER_THIN);// 右边框
 
-		String Column[] = {"sch_Name", "tea_Name", "role_Level", "cus_Name","average"};// 列id
+		String Column[] = {"sch_Name", "tea_Name", "role_Level", "cus_Name","startEndData", "average"};// 列id
 		ExportUtils.outputHeaders(headName, sheets, headerStyle);// 生成表头
 		ExportUtils.outputColumn(Column, exportList, sheets, 1, cell_Style, cell_Style_new, cell_Style_red);// 生成列表数据
 

@@ -57,6 +57,17 @@ public class Investigation {
 	private double average;
 	// 投票的人数
 	private int peopleCount;
+	// 起始日期
+	private String startEndData="";
+	
+	
+	public String getStartEndData() {
+		return startEndData;
+	}
+
+	public void setStartEndData(String startEndData) {
+		this.startEndData = startEndData;
+	}
 
 	public int getUser_Num() {
 		return user_Num;

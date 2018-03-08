@@ -144,6 +144,9 @@ $(function() {
 					} else {
 						//$("#export").hide();
 					}
+					for(var i=0;i<data.selectInfo.length;i++){
+						data.selectInfo[i].startEndData = data.startEndData;
+					}
 					$('#tb_exporttables').bootstrapTable('load', data.selectInfo);
 					hideModal();
 				} else {
@@ -239,6 +242,12 @@ $(function() {
 			align : 'center',
 			valign : 'middle',
 			title : "平均分"
+		}, {
+			field : 'startEndData',
+			align : 'center',
+			valign : 'middle',
+			title : "起始日期",
+			width: 200
 		} ],
 		data : []
 	});

@@ -32,8 +32,8 @@ public class ExportUtils {
 	public static void outputColumn(String[] headerInfo, List<Investigation> columnsInfo, HSSFSheet sheet, int rowIndex,
 			HSSFCellStyle cell_Style, HSSFCellStyle cell_Style_new, HSSFCellStyle cell_Style_red) {
 		HSSFRow row;
-		int headerSize = headerInfo.length;
-		int columnSize = columnsInfo.size();
+		int headerSize = headerInfo.length; // 列数
+		int columnSize = columnsInfo.size(); // 行数
 		// 循环插入多少行
 		for (int i = 0; i < columnSize; i++) {
 			row = sheet.createRow(rowIndex + i);
