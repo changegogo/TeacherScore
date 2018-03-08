@@ -64,7 +64,7 @@ public class RecentInputServlet2 extends HttpServlet {
 		} else if ("hd".equals(username)) {
 			areaId = 6;
 		} else if ("xn".equals(username)) {
-			areaId = 7;
+			areaId = 1;
 		} else if ("cp".equals(username)) {
 			areaId = 10;
 		} else {

@@ -1,10 +1,10 @@
 [
-	{"name": "京津冀","schoolcode": 0},
-	{"name": "上海区","schoolcode": 1},
-	{"name": "西北区","schoolcode": 2},
-	{"name": "华中区","schoolcode": 3},
-	{"name": "华北区","schoolcode": 4},
-	{"name": "华南区","schoolcode": 5},
-	{"name": "华东区","schoolcode": 6},
-	{"name": "西南区","schoolcode": 7}
+	{"name": "第一分公司","schoolcode": 0},
+	{"name": "第二分公司","schoolcode": 6},
+	{"name": "第三分公司","schoolcode": 1},
+	{"name": "第四分公司","schoolcode": 2},
+	{"name": "第五分公司","schoolcode": 5},
+	{"name": "第六分公司","schoolcode": 3},
+	{"name": "第七分公司","schoolcode": 4},
+	{"name": "第三分公司","schoolcode": 7}
 ]
