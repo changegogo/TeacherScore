@@ -264,10 +264,16 @@ $(function() {
 			async : true,
 			success : function(data) {
 				$('#searchBtn').attr('disabled', false);
-				if (data.code != 200) {
-					alert(data.msg);
+				if(data.code==undefined){
+					window.location.href = "../Login.html";
 					return;
+				}else{
+					if (data.code != 200) {
+						alert(data.msg);
+						return;
+					}
 				}
+				
 				// 组装数据
 				var teachers = data.result.teachers;
 				GLOBAL.teachers = teachers;

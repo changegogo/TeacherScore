@@ -526,14 +526,17 @@ $(function() {
 				showModal();
 			},
 			success : function(data) {
-				if (data.code == 200) {
-					if (data.results.length > 0) {
+				if(data.code==undefined){
+					window.location.href = "/Login.html";
+				}else{
+					if (data.code == 200) {
+						if (data.results.length == 0) {
+							alert("没有相关数据");
+						} 
 						$('#tb_departments').bootstrapTable('load', data.results);
 					} else {
-						$('#tb_departments').bootstrapTable('load', []);
+						alert(data.msg);
 					}
-				} else {
-					alert(data.msg);
 				}
 				hideModal();
 			},

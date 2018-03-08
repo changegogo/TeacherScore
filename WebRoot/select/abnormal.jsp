@@ -241,7 +241,7 @@
 	<script src="js/WdatePicker.js"></script>
 	<script src="js/tableExport.min.js"></script>
 	<script src="js/bootstrap-table-export.min.js"></script>
-	<script src="js/src/abnormal.js"></script>
+	<script src="js/src/abnormal.js?v=1.2"></script>
 
 </body>
 </html>
