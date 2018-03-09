@@ -48,6 +48,10 @@ public class SelectExportTableServlet extends HttpServlet {
 				selectJsonBean.setCode(200);
 				if (selectInfo.size() > 0) {
 					selectJsonBean.setMsg("success");
+					// 修改起始日期
+					String startData = selectBean.getStartDate().replace("-", "/");
+					String endData = selectBean.getEndDate().replace("-", "/");
+					selectJsonBean.setStartEndData(startData+"-"+endData);
 					selectJsonBean.setSelectInfo(selectInfo);
 				} else {
 					selectJsonBean.setMsg("查询没有结果!");
