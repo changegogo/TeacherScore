@@ -39,4 +39,9 @@ public class SchoolBean {
 		this.subcode = subcode;
 	}
 
+	@Override
+	public String toString() {
+		return "SchoolBean [schID=" + schID + ", sch=" + sch + ", subcode=" + subcode + ", tempSubcode=" + tempSubcode
+				+ "]";
+	}
 }

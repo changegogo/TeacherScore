@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -748,16 +749,9 @@ public class DataBaseOperaUtil {
 		}
 		return areaLargeList;
 	}
-
-	//查询所有大区开设的所有校区，以及校区开设的专业
-	public static HashMap<Integer, LargeAreaSumBean> getSchools() throws SQLException {
-		HashMap<Integer, LargeAreaSumBean> largeMap = new HashMap<Integer, LargeAreaSumBean>();
-		// 查询出所有的校区所对应的专业
-		// String sql = " SELECT l.id,l.largeAreaName,s.id
-		// schID,s.schoolName,m.id majorID "
-		// + " from tab_large l,tab_school s,tab_major m ,tab_sch_and_major zh "
-		// + " WHERE zh.majorId = m.id AND zh.schoolId = s.id AND s.largeAreaId
-		// = l.id " + " ORDER BY l.id";
+	
+	public static LinkedHashMap<Integer, LargeAreaSumBean> getSchools() throws SQLException {
+		LinkedHashMap<Integer, LargeAreaSumBean> largeMap = new LinkedHashMap<Integer, LargeAreaSumBean>();
 		String sql = "select tmp.id,tmp.largeAreaName,tmp.largeLeader,tmp.schID,tmp.schoolName,zh.majorId from (SELECT l.id,l.largeAreaName,l.largeLeader,s.id schID,s.schoolName from tab_large l,tab_school s WHERE  s.largeAreaId = l.id ) tmp LEFT JOIN tab_sch_and_major zh on tmp.schID = zh.schoolId ORDER BY tmp.largeLeader ASC";
 		System.out.println("所有大区："+sql);
 		DruidPooledConnection conn = DbPoolConnection.getInstance().getConnection();
@@ -771,6 +765,7 @@ public class DataBaseOperaUtil {
 			while (rs.next()) {
 				int tmpLargeID = rs.getInt("id"); // 大区的id
 				String tmpLargeName = rs.getString("largeAreaName"); // 大区的名称
+				
 				LargeAreaSumBean lasbAreaSumBean = null;
 				if (largeMap.containsKey(tmpLargeID)) {
 					lasbAreaSumBean = largeMap.get(tmpLargeID);
@@ -780,7 +775,7 @@ public class DataBaseOperaUtil {
 					lasbAreaSumBean.setName(tmpLargeName);
 					largeMap.put(tmpLargeID, lasbAreaSumBean);
 				}
-
+				
 				SchoolBean sb = new SchoolBean();
 				sb.setSchID(rs.getInt("schID"));
 				sb.setSch(rs.getString("schoolName"));
@@ -794,16 +789,16 @@ public class DataBaseOperaUtil {
 		} finally {
 			DbPoolConnection.getInstance().close(conn, stmt, rs);
 		}
-
+		
 		/************************************************************/
 		return largeMap;
 	}
-
+	
 	/**
 	 * 查询大区，校区，专业绑定的数据
 	 */
-	public static HashMap<Integer, LargeAreaSumBean> getAreaAndSchoolAndMajor(int areaId) throws SQLException {
-		HashMap<Integer, LargeAreaSumBean> largeMap = new HashMap<Integer, LargeAreaSumBean>();
+	public static LinkedHashMap<Integer, LargeAreaSumBean> getAreaAndSchoolAndMajor(int areaId) throws SQLException {
+		LinkedHashMap<Integer, LargeAreaSumBean> largeMap = new LinkedHashMap<Integer, LargeAreaSumBean>();
 		String sql = " select * from (select tmp.id,tmp.largeAreaName,tmp.largeLeader,tmp.schID,tmp.schoolName,zh.majorId "
 				+ " from (SELECT l.id,l.largeAreaName,s.id schID,s.schoolName from tab_large l,tab_school s WHERE  s.largeAreaId = l.id  ORDER BY l.largeLeader ASC) tmp LEFT JOIN tab_sch_and_major zh on tmp.schID = zh.schoolId  order by tmp.id) temp where temp.id = '"
 				+ areaId + "'" + "OR temp.id=9 ORDER BY largeLeader ASC";
@@ -846,7 +841,7 @@ public class DataBaseOperaUtil {
 		/************************************************************/
 		return largeMap;
 	}
-
+	
 	/**
 	 * 查询专业名称
 	 * 

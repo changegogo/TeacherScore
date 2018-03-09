@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -86,7 +87,7 @@ public class RecentInputServlet2 extends HttpServlet {
 
 	public String getJsonData(String unionid, int areaId) throws SQLException {
 		RecentBean recent = new RecentBean();
-		HashMap<Integer, LargeAreaSumBean> largeMap = null;
+		LinkedHashMap<Integer, LargeAreaSumBean> largeMap = null;
 		ListBean listBean = new ListBean();
 		AllData allData = new AllData();
 		List<String> recentClass = DataBaseOperaUtil.getRecentInputClass(unionid);
@@ -98,6 +99,7 @@ public class RecentInputServlet2 extends HttpServlet {
 		} else {
 			largeMap = DataBaseOperaUtil.getAreaAndSchoolAndMajor(areaId); // 大区账户，查出对应大区的数据
 		}
+		System.out.println("RecentInputServlet2-->largeMap.size="+largeMap.size());
 		List<List<SchoolBean>> sumList = new ArrayList<List<SchoolBean>>();
 		List<LargeAreaBean> areaList = new ArrayList<LargeAreaBean>();
 		Iterator iter = largeMap.entrySet().iterator(); // 获得map的Iterator
@@ -110,6 +112,9 @@ public class RecentInputServlet2 extends HttpServlet {
 			Entry entry = (Entry) iter.next();
 			LargeAreaSumBean bean = (LargeAreaSumBean) entry.getValue();
 			sumList.add(bean.getSchools()); // 字段schools就出来了
+			bean.setSchoolcode(index);//和前端级联菜单相对应
+			
+			System.out.println("RecentInputServlet2-->"+bean);
 
 			LargeAreaBean labean = new LargeAreaBean();
 			labean.setName(bean.getName());

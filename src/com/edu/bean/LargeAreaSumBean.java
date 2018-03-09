@@ -7,6 +7,12 @@ public class LargeAreaSumBean {
 	private int schoolcode; // 大区的code码
 	private String name; // 大区的名称
 	private List<SchoolBean> schools = new ArrayList<SchoolBean>();
+	
+	public LargeAreaSumBean(){}
+	public LargeAreaSumBean(int schoolcode, String name){
+		this.schoolcode = schoolcode;
+		this.name = name;
+	}
 
 	public List<SchoolBean> getSchools() {
 		return schools;
@@ -53,4 +59,8 @@ public class LargeAreaSumBean {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "LargeAreaSumBean [schoolcode=" + schoolcode + ", name=" + name + ", schools=" + schools + "]";
+	}
 }
