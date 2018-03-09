@@ -4,49 +4,26 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=9" />
 <title>教师评价系统后台操作页面</title>
 
-<link rel="stylesheet" href="css/basic.css" />
-<link rel="stylesheet" href="css/style.css" />
-<!--<link rel="stylesheet" href="css/style-metro.css"/>-->
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/bootstrap-table.min.css" />
+<link href="css/basic.css" rel="stylesheet" />
+<link href="css/style.css" rel="stylesheet" />
+<!--<link href="css/style-metro.css"  rel="stylesheet"/>-->
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/bootstrap-table.min.css" rel="stylesheet" />
 <link href="css/font-awesome.css" rel="stylesheet" />
-<style type="text/css">
-/*.chartstyle {
-    		width: 40%;
-    		height: 300px;
-    		float: left;
-    		margin-left: 5%;
-    		margin-right: 5%;
-    	}*/
-.zxchartstyle {
-	width: 50%;
-	height: 400px;
-	float: left;
-}
-
-.ldchartstyle {
-	width: 50%;
-	height: 400px;
-	float: left;
-	border-left: 1px dashed gray;
-}
-</style>
+</head>
 <body>
 	<%
 		HttpSession s = request.getSession();
 		String username = (String) s.getAttribute("username");
 		String password = (String) s.getAttribute("password");
-		System.out.println("username1:" + username + ",password1:" + password);
 		if (username != null && password != null) {
 	%>
-	<div id="wrapper" data-genuitec-lp-enabled="false"
-		data-genuitec-file-id="wc1-51"
-		data-genuitec-path="/SearchServer/WebRoot/select/dataAnalysis.jsp"
-		data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-51"
-		data-genuitec-path="/SearchServer/WebRoot/select/dataAnalysis.jsp">
-		<nav class="navbar  navbar-cls-top " role="navigation"
+	<div id="wrapper">
+		<nav class="navbar  navbar-cls-top" role="navigation"
 			style="margin-bottom: 0">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -63,14 +40,13 @@
 			<div class="sidebar-collapse">
 				<ul class="nav" id="main-menu">
 					<!--查询主页面的侧边栏按钮-->
-					<li><a href="queryExport.jsp"><i class="fa fa-dashboard"></i>查询导出</a>
-					</li>
-					<!--编辑菜单栏按钮-->
-					<li><a href="abnormal.jsp"><i class="fa fa-anchor"></i>异常数据</a>
+					<li><a  href="queryExport.jsp"><i
+							class="fa fa-dashboard "></i>查询导出</a></li>
+					<li><a href="abnormal.jsp"><i class="fa fa-anchor "></i>异常数据</a>
 					</li>
 					<li><a href="teacherManage.jsp"><i class="fa fa-edit "></i>老师管理</a>
 					</li>
-					<li><a class="active-menu" href=" dataAnalysis.jsp"><i
+					<li><a href="dataAnalysis.jsp"><i
 							class="fa fa-bar-chart-o"></i>数据分析</a></li>
 					<%
 						if (username.equals("admin") || username.equals("jxgl")) {
@@ -79,18 +55,19 @@
 					<%
 						}
 					%>
+					<li><a class="active-menu" href="exportTable.jsp"><i class="glyphicon glyphicon-file"></i>导出表格</a></li>
 				</ul>
 			</div>
 
 		</nav>
 		<!-- 主页面  -->
-		<div id="page-wrapper" style="min-height:660px;">
+		<div id="page-wrapper">
 			<div id="page-inner">
 				<!--主页面头部-->
 				<div class="portlet box grey">
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="icon-user"></i>数据分析
+							<i class="icon-user"></i>导出数据
 						</div>
 					</div>
 					<div class="panel panel-default" style="margin-bottom:10px;">
@@ -99,13 +76,13 @@
 							<form id="formSearch" class="form-horizontal">
 								<div class="form-group" style="margin-top: 15px">
 									<label class="control-label col-sm-1"
-										for="txt_search_departmentname">大&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区</label>
+										for="txt_search_departmentname">大&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区</label>
 									<div class="col-sm-2">
 										<select class="form-control" id="bigArea">
-											<option value text="请选择">请选择</option>
+											<option value text="京津冀">京津冀</option>
 										</select>
 									</div>
-									<label class="control-label col-sm-1" for="txt_search_statu">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;校</label>
+									<label class="control-label col-sm-1" for="txt_search_statu">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;校</label>
 									<div class="col-sm-2">
 										<select class="form-control" id="schools">
 											<option value txt="请选择">请选择</option>
@@ -114,54 +91,74 @@
 									<label class="control-label col-sm-1" for="txt_search_statu">专业</label>
 									<div class="col-sm-2">
 										<select class="form-control " id="profession">
-											<option value txt="请选择">请选择</option>
+											<option value>请选择</option>
 										</select>
 									</div>
 									<label class="control-label col-sm-1" for="txt_search_statu">角色</label>
 									<div class="col-sm-2">
 										<select class="form-control " id="role">
-											<option value='0' text="讲师" selected>讲师</option>
-											<option value='1' text="班主任">班主任</option>
-											<option value='2' text="就业">就业</option>
-											<option value='3' text="在线老师">在线老师</option>
+											<!--<option value >请选择</option>-->
+											<option value selected>讲师</option>
+											<option value>班主任</option>
+											<option value>就业</option>
+											<option value>在线老师</option>
 										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<!--日期-->
-									<label class="control-label col-sm-1"
-										for="txt_search_departmentname">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;份</label>
+									<label class="control-label col-sm-1" for="startDate">起始日期</label>
 									<div class="col-sm-2">
-										<select class="form-control" id="year">
-											<option value text="2017" selected>2017</option>
-											<option value text="2018">2018</option>
-											<option value text="2019">2019</option>
-											<option value text="2020">2020</option>
-											<option value text="2021">2021</option>
-											<option value text="2022">2022</option>
-											<option value text="2023">2023</option>
-											<option value text="2024">2024</option>
-										</select>
+										<input class="form-control Wdate" style="height:35px;"
+											type="text" onclick="WdatePicker()" id="startDate"
+											name="startDate">
+									</div>
+									<label class="control-label col-sm-1" for="endDate">结束日期</label>
+									<div class="col-sm-2">
+										<input class="form-control Wdate" style="height:35px;"
+											type="text" onclick="WdatePicker()" id="endDate"
+											name="endDate">
 									</div>
 									<!--查询按钮-->
-									<div class="col-sm-1">
-										<button type="button" id="searchBtn" class="btn btn-primary"
-											style="margin-left:13px;">查询</button>
+									<div class="col-sm-1" style="text-align: left;">
+										<button type="button" id="searchBtnExport" class="btn btn-primary"
+											style="margin-left:40px;">查询</button>
+									</div>
+									<div class="col-sm-1" style="text-align: left;">
+										<button type="button" id="export" class="btn btn-primary"
+											style="display:none;" style="margin-left:50px;">导出</button>
 									</div>
 								</div>
 							</form>
 						</div>
 					</div>
-					<div class="tableStyle" style="height: 450px; padding-top: 10px;">
-						<div class="chartstyle zxchartstyle" id="zxChart"></div>
-						<div class="chartstyle ldchartstyle" id="ldChart"></div>
+					<div id="toolbar" style="margin-right: 5px; margin-top: -1px;">
+						<button id="btn_add" type="button" class="btn btn-default"
+							data-toggle="dropdown">
+							<span class="glyphicon glyphicon-export icon-share"
+								aria-hidden="true"></span> 导出 <span class="caret"
+								aria-hidden="true"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li id="exportli"><a>MS-Excel</a></li>
+						</ul>
+					</div>
+					<div class="tableStyle">
+						<table id="tb_exporttables">
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!--加载等待-->
+	<div class="modal fade" id="myModal"
+		style="position:absolute;left:50%;top:40%;">
+		<img src="images/loader.gif" alt="等待图标" />
+	</div>
 	<!--尾部-->
-	<div id="footer-sec" style="margin-top:-10px;">
+	<div id="footer-sec">
+
 		<div class="footer">
 			<div class="innerContainer">
 				<p style="text-align:center;">总部地址:北京市海淀区小南庄怡秀园甲一号亿德大厦10层
@@ -176,12 +173,17 @@
 			response.sendRedirect("../Login.html");
 		}
 	%>
+
+
+
+
+
+
 	<script src="js/jquery-1.9.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap-table.min.js"></script>
 	<script src="js/bootstrap-table-zh-CN.min.js"></script>
 	<script src="js/WdatePicker.js"></script>
-	<script src="js/echarts.min.js"></script>
-	<script src="js/src/dataAnalysis.js?v=1.2"></script>
+	<script src="js/src/exportTable.js"></script>
 </body>
 </html>

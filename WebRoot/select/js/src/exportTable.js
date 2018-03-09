@@ -93,7 +93,7 @@ $(function() {
 
 
 	// 查询按钮
-	$("#searchBtn").click(function() {
+	$("#searchBtnExport").click(function() {
 
 		var dataSize = GLOBAL.selectData.dataSize;
 		var blankbigArea = $("#bigArea").find("option:selected").text() == "请选择";
@@ -129,7 +129,7 @@ $(function() {
 		};
 
 		$.ajax({
-			url : "../selectServlet",
+			url : "../selectExportTableServlet",
 			type : "post",
 			data : {
 				name : JSON.stringify(conditionData)
@@ -138,26 +138,22 @@ $(function() {
 				showModal();
 			},
 			success : function(data) {
-				if(data.code==undefined){
-					window.location.href = "../Login.html";
-				}else{
-					if (data.code == 200) {
-						if (data.selectInfo.length > 0) {
-							//$("#export").show();
-						} else {
-							//$("#export").hide();
-						}
-						$('#tb_departments').bootstrapTable('load', data.selectInfo);
-						hideModal();
-					}else{
-						alert(data.msg);
-						hideModal();
+				if (data.code == 200) {
+					if (data.selectInfo.length > 0) {
+						//$("#export").show();
+					} else {
+						//$("#export").hide();
 					}
+					$('#tb_exporttables').bootstrapTable('load', data.selectInfo);
+					hideModal();
+				} else {
+					alert(data.msg);
+					hideModal();
 				}
 			},
 			error : function(err) {
 				alert("网络错误");
-				$('#tb_departments').bootstrapTable('load', []);
+				$('#tb_exporttables').bootstrapTable('load', []);
 				hideModal();
 			}
 		});
@@ -173,7 +169,7 @@ $(function() {
 				startDate : $("#startDate").val() == "" ? "" : $("#startDate").val(),
 				endDate : $("#endDate").val() == "" ? "" : $("#endDate").val()
 			};
-			var url = "../ExportssServlet";
+			var url = "../exportDataServlet";
 			$.ajax({
 				async : false,
 				method : "get",
@@ -189,7 +185,7 @@ $(function() {
 						return;
 					} else {
 						location.href = "/SearchServer/xlsx/" + data;
-						//location.href = 'http://tp.feicuiedu.com:8081/WebRoot/xlsx/' + data;
+					//location.href = 'http://tp.feicuiedu.com:8081/WebRoot/xlsx/' + data;
 					}
 				},
 				error : function(err) {
@@ -199,7 +195,7 @@ $(function() {
 		}
 	})
 	// 初始化table
-	$('#tb_departments').bootstrapTable({
+	$('#tb_exporttables').bootstrapTable({
 		dataType : "json",
 		showRefresh : false, //刷新按钮
 		showToggle : false, // 切换视图
@@ -219,11 +215,6 @@ $(function() {
 		search : true,
 		searchAlign : "left",
 		columns : [ {
-			field : 'large_Area',
-			align : 'center',
-			valign : 'middle',
-			title : "大区"
-		}, {
 			field : 'sch_Name',
 			align : 'center',
 			valign : 'middle',
@@ -244,25 +235,10 @@ $(function() {
 			valign : 'middle',
 			title : "专业"
 		}, {
-			field : 'stu_Class',
-			align : 'center',
-			valign : 'middle',
-			title : "班级"
-		}, {
-			field : 'peopleCount',
-			align : 'center',
-			valign : 'middle',
-			title : "投票人数"
-		}, {
 			field : 'average',
 			align : 'center',
 			valign : 'middle',
 			title : "平均分"
-		}, {
-			field : 'fill_Date',
-			align : 'center',
-			valign : 'middle',
-			title : "月份"
 		} ],
 		data : []
 	});

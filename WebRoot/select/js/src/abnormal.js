@@ -133,10 +133,17 @@ $(function() {
 			url : _url,
 			type : "get",
 			success : function(data) {
-				if (data.code == 200) {
-					$('#tb_departments').bootstrapTable('load', data.results);
-				} else {
-					alert(data.msg);
+				if(data.code==undefined){
+					window.location.href = "../Login.html";
+				}else{
+					if (data.code == 200) {
+						if(data.results.length==0){
+							alert("没有相关数据");
+						}
+						$('#tb_departments').bootstrapTable('load', data.results);
+					} else {
+						alert(data.msg);
+					}
 				}
 			},
 			error : function(err) {

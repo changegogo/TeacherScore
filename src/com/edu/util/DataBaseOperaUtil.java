@@ -662,6 +662,107 @@ public class DataBaseOperaUtil {
 		}
 		return list;
 	}
+	
+	/**
+	 * 查询导出数据
+	 * 
+	 * @return
+	 * @throws SQLException 
+	 */
+	public static List<Investigation> selectExportData(SelectBean selectBean) throws SQLException {
+		String sql = "SELECT t.sch_Name,t.tea_Name,t.role_Level,t.cus_Name,SUM(t.average)/COUNT(1) b FROM tab_researchinfo t ";
+		int role = 0;
+		if ("讲师".equals(selectBean.getRole_Level())) {
+			role = 0;
+		} else if ("班主任".equals(selectBean.getRole_Level())) {
+			role = 1;
+		} else if ("就业".equals(selectBean.getRole_Level())) {
+			role = 2;
+		} else if ("在线老师".equals(selectBean.getRole_Level())) {
+			role = 3;
+		}
+
+		if ("请选择".equals(selectBean.getLargeArea()) || "翡翠集团".equals(selectBean.getLargeArea())) {
+			if ("请选择".equals(selectBean.getMajor())) {// 专业
+				sql += " where date_format(fill_Date,'%Y-%m-%d') >= '" + selectBean.getStartDate()
+						+ "' and role_Level = '" + role + "' and date_format(fill_Date,'%Y-%m-%d')<= '"
+						+ selectBean.getEndDate()
+						+ "' GROUP BY t.tea_Name ORDER BY t.sch_Name";
+			} else {
+				sql += " where cus_Name = '" + selectBean.getMajor() + "' and role_Level = '" + role
+						+ "' and date_format(fill_Date,'%Y-%m-%d') >= '" + selectBean.getStartDate()
+						+ "' and date_format(fill_Date,'%Y-%m-%d') <= '" + selectBean.getEndDate()
+						+ "' GROUP BY t.tea_Name ORDER BY t.sch_Name";
+			}
+		} else {
+			if ("请选择".equals(selectBean.getSchName()) || "翡翠集团".equals(selectBean.getSchName())) {
+				if ("请选择".equals(selectBean.getMajor())) {
+					sql += " where large_Area = '" + selectBean.getLargeArea() + "' and role_Level = '" + role
+							+ "' and  date_format(fill_Date,'%Y-%m-%d') >= '" + selectBean.getStartDate()
+							+ "' and date_format(fill_Date,'%Y-%m-%d')<= '" + selectBean.getEndDate()
+							+ "' GROUP BY t.tea_Name ORDER BY t.sch_Name";
+				} else {
+					sql += " where large_Area = '" + selectBean.getLargeArea() + "' and role_Level = '" + role
+							+ "' and cus_Name = '" + selectBean.getMajor()
+							+ "' and date_format(fill_Date,'%Y-%m-%d') >= '" + selectBean.getStartDate()
+							+ "' and date_format(fill_Date,'%Y-%m-%d')<= '" + selectBean.getEndDate()
+							+ "' GROUP BY t.tea_Name ORDER BY t.sch_Name";
+				}
+			} else {
+				if ("请选择".equals(selectBean.getMajor())) {
+					sql += " where large_Area = '" + selectBean.getLargeArea() + "' and sch_Name = '"
+							+ selectBean.getSchName() + "' and role_Level = '" + role
+							+ "' and date_format(fill_Date,'%Y-%m-%d') >= '" + selectBean.getStartDate()
+							+ "' and date_format(fill_Date,'%Y-%m-%d') <= '" + selectBean.getEndDate()
+							+ "' GROUP BY t.tea_Name ORDER BY t.sch_Name ";
+				} else {
+					sql += " where large_Area = '" + selectBean.getLargeArea() + "' and sch_Name = '"
+							+ selectBean.getSchName() + "' and role_Level = '" + role + "' and cus_Name = '"
+							+ selectBean.getMajor() + "' and date_format(fill_Date,'%Y-%m-%d') >= '"
+							+ selectBean.getStartDate() + "' and date_format(fill_Date,'%Y-%m-%d') <= '"
+							+ selectBean.getEndDate()
+							+ "' GROUP BY t.tea_Name ORDER BY t.sch_Name";
+				}
+			}
+		}
+		DruidPooledConnection conn = DbPoolConnection.getInstance().getConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		List<Investigation> list = null;
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql); // 执行查询数据库的操作
+			list = new ArrayList<Investigation>();
+			while (rs.next()) {
+				Investigation investigation = new Investigation();
+				if (rs.getString("role_Level").equals("0")) {
+					investigation.setRole_Level("讲师"); // 角色
+				} else if (rs.getString("role_Level").equals("1")) {
+					investigation.setRole_Level("班主任");
+				} else if (rs.getString("role_Level").equals("2")) {
+					investigation.setRole_Level("就业");
+				} else if (rs.getString("role_Level").equals("3")) {
+					investigation.setRole_Level("在线老师");
+				}
+				investigation.setSch_Name(rs.getString("sch_Name")); // 校区
+				investigation.setTea_Name(rs.getString("tea_Name")); // 老师名称
+				investigation.setCus_Name(rs.getString("cus_Name"));// 专业
+				/********* 设置四舍五入 *********/
+				double average = rs.getDouble("b");
+				BigDecimal b = new BigDecimal(average);
+				double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+				investigation.setAverage(f1);// 平均分
+				/********* 设置四舍五入 *********/
+				list.add(investigation);
+			}
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			// System.out.println("查询数据错误~");
+		} finally {
+			DbPoolConnection.getInstance().close(conn, stmt, rs);
+		}
+		return list;
+	}
 
 	/**
 	 * 根据用户ID返回最近填写的班级和老师
